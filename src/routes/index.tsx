@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowRight, ShieldCheck, Zap, TrendingUp, DollarSign, Trophy, BarChart3 } from "lucide-react";
+import { ArrowRight, ShieldCheck, Zap, TrendingUp, DollarSign, Trophy, BarChart3, Medal } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SiteHeader } from "@/components/site-header";
@@ -51,17 +52,9 @@ function LandingPage() {
             </Button>
           </div>
 
-          <div className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4 text-left">
-            {[
-              { label: "Funded traders", value: "12,400+" },
-              { label: "Avg payout", value: "$3,180" },
-              { label: "Profit split", value: "up to 80%" },
-            ].map((s) => (
-              <Card key={s.label} className="border-border/60 bg-card/60 p-5 backdrop-blur">
-                <p className="text-xs uppercase tracking-wider text-muted-foreground">{s.label}</p>
-                <p className="mt-1 text-2xl font-semibold">{s.value}</p>
-              </Card>
-            ))}
+          <div className="mx-auto mt-10 inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
+            <ShieldCheck className="h-3.5 w-3.5 text-primary" />
+            Simulated trading platform for educational purposes only
           </div>
         </div>
       </section>
@@ -155,9 +148,9 @@ function LandingPage() {
       <section id="payouts" className="container mx-auto px-6 py-24">
         <div className="grid gap-6 md:grid-cols-3">
           {[
-            { icon: Zap, title: "One-step evaluation", desc: "No two-phase nonsense. Pass once, get funded." },
+            { icon: Zap, title: "One-step evaluation", desc: "No two-phase nonsense. Pass once, get a demo funded account." },
             { icon: ShieldCheck, title: "Transparent rules", desc: "Clear daily and total drawdown. No surprise breaches." },
-            { icon: TrendingUp, title: "Scale to $2M", desc: "Hit consistent profits and we'll double your account every 4 months." },
+            { icon: TrendingUp, title: "Built to practice", desc: "Hone your edge in a realistic risk-managed environment." },
           ].map((f) => (
             <Card key={f.title} className="border-border/60 bg-card p-6">
               <f.icon className="h-6 w-6 text-primary" />
@@ -165,6 +158,63 @@ function LandingPage() {
               <p className="mt-2 text-sm text-muted-foreground">{f.desc}</p>
             </Card>
           ))}
+        </div>
+      </section>
+
+      {/* Leaderboard */}
+      <section id="leaderboard" className="container mx-auto px-6 py-16">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Demo Leaderboard</h2>
+          <p className="mt-3 text-muted-foreground">Top simulated performers this month. Results are from demo accounts.</p>
+        </div>
+        <Card className="mt-8 border-border/60 bg-card p-2">
+          <div className="divide-y divide-border/60">
+            {[
+              { rank: 1, name: "Alex K.", acct: "Elite $25K", gain: 18.4 },
+              { rank: 2, name: "Priya S.", acct: "Pro $10K", gain: 15.1 },
+              { rank: 3, name: "Marco D.", acct: "Elite $25K", gain: 12.7 },
+              { rank: 4, name: "Lena V.", acct: "Pro $10K", gain: 10.2 },
+              { rank: 5, name: "Jordan B.", acct: "Starter $5K", gain: 8.9 },
+            ].map((r) => (
+              <div key={r.rank} className="flex items-center justify-between px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <div className={`flex h-8 w-8 items-center justify-center rounded-full ${r.rank <= 3 ? "bg-gradient-primary text-primary-foreground" : "bg-secondary text-muted-foreground"}`}>
+                    {r.rank <= 3 ? <Medal className="h-4 w-4" /> : <span className="text-xs font-semibold">{r.rank}</span>}
+                  </div>
+                  <div>
+                    <p className="font-medium">{r.name}</p>
+                    <p className="text-xs text-muted-foreground">{r.acct}</p>
+                  </div>
+                </div>
+                <p className="text-success font-semibold">+{r.gain.toFixed(2)}%</p>
+              </div>
+            ))}
+          </div>
+        </Card>
+        <p className="mt-3 text-center text-xs text-muted-foreground/70">Illustrative demo data — not real trader results.</p>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className="container mx-auto px-6 py-16">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Frequently asked questions</h2>
+          <p className="mt-3 text-muted-foreground">Everything you need to know about the simulated platform.</p>
+        </div>
+        <div className="mx-auto mt-8 max-w-3xl">
+          <Accordion type="single" collapsible className="w-full">
+            {[
+              { q: "Is this real money trading?", a: "No. TradeFunds is entirely simulated for educational purposes. All balances, trades, and payouts are virtual." },
+              { q: "How does the challenge work?", a: "Pick an account size, hit the profit target without breaching the daily or total drawdown, and your demo account is marked as passed." },
+              { q: "What markets can I trade?", a: "You can practice on major forex pairs, indices, commodities and crypto via the TradingView chart inside the dashboard." },
+              { q: "Do I need to deposit money?", a: "No deposits are required. Everything runs on a virtual $10,000 starting balance so you can focus on learning." },
+              { q: "Can I reset my account?", a: "Yes. You can start a new challenge any time from the My Challenges page." },
+            ].map((f) => (
+              <AccordionItem key={f.q} value={f.q}>
+                <AccordionTrigger className="text-left">{f.q}</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </section>
 

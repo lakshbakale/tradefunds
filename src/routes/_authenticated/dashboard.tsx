@@ -26,7 +26,8 @@ function Dashboard() {
 
   const challenges = data?.challenges ?? [];
   const trades = data?.trades ?? [];
-  const totalBalance = challenges.reduce((s, c) => s + Number(c.current_balance), 0);
+  const VIRTUAL_BASELINE = 10000;
+  const totalBalance = challenges.length === 0 ? VIRTUAL_BASELINE : challenges.reduce((s, c) => s + Number(c.current_balance), 0);
   const totalPnl = challenges.reduce((s, c) => s + (Number(c.current_balance) - Number(c.starting_balance)), 0);
   const activeCount = challenges.filter((c) => c.status === "active").length;
 
