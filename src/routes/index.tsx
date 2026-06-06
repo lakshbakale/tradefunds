@@ -35,13 +35,9 @@ function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-hero">
         <div className="container relative mx-auto px-6 pt-24 pb-32 text-center">
-          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-4 py-1.5 text-xs text-muted-foreground backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
-            $4.2M paid out to traders this month
-          </div>
           <h1 className="mx-auto mt-6 max-w-4xl text-5xl font-bold tracking-tight md:text-7xl">
-            Trade our capital.<br />
-            <span className="text-gradient">Keep the profits.</span>
+            Master Trading with<br />
+            <span className="text-gradient">TradeFunds</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             Pass a one-step evaluation and access funded accounts up to $200,000. No time limits, instant scaling, up to 80% profit split.
