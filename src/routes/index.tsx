@@ -35,13 +35,9 @@ function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-hero">
         <div className="container relative mx-auto px-6 pt-24 pb-32 text-center">
-          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-border/60 bg-card/60 px-4 py-1.5 text-xs text-muted-foreground backdrop-blur">
-            <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
-            $4.2M paid out to traders this month
-          </div>
           <h1 className="mx-auto mt-6 max-w-4xl text-5xl font-bold tracking-tight md:text-7xl">
-            Trade our capital.<br />
-            <span className="text-gradient">Keep the profits.</span>
+            Master Trading with<br />
+            <span className="text-gradient">TradeFunds</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
             Pass a one-step evaluation and access funded accounts up to $200,000. No time limits, instant scaling, up to 80% profit split.
@@ -89,6 +85,36 @@ function LandingPage() {
               <p className="mt-4 text-xs text-muted-foreground">Step {i + 1}</p>
               <h3 className="mt-1 text-lg font-semibold">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Challenge Tiers */}
+      <section className="container mx-auto px-6 py-16">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Challenge Tiers</h2>
+          <p className="mt-3 text-muted-foreground">Pick the account size that matches your skill level.</p>
+        </div>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {[
+            { name: "Starter", size: 5000, price: 49, target: "8%", daily: "5%", split: "70%" },
+            { name: "Pro", size: 10000, price: 99, target: "8%", daily: "5%", split: "75%" },
+            { name: "Elite", size: 25000, price: 199, target: "10%", daily: "5%", split: "80%" },
+          ].map((c) => (
+            <Card key={c.name} className="group relative overflow-hidden border-border/60 bg-card p-6 transition-all hover:border-primary/60 hover:shadow-glow">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{c.name}</p>
+              <p className="mt-1 text-4xl font-bold">${c.size.toLocaleString()}</p>
+              <p className="mt-3 text-sm text-muted-foreground">Demo account for practice trading.</p>
+              <div className="mt-5 space-y-2 text-sm">
+                <Row label="Profit target" value={c.target} />
+                <Row label="Max daily loss" value={c.daily} />
+                <Row label="Profit split" value={c.split} />
+              </div>
+              <div className="mt-6 flex items-center justify-between">
+                <p className="text-2xl font-semibold">${c.price}</p>
+                <Button size="sm" asChild className="bg-gradient-primary"><Link to="/auth">Start</Link></Button>
+              </div>
             </Card>
           ))}
         </div>

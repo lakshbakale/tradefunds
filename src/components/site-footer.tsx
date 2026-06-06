@@ -6,6 +6,9 @@ export function SiteFooter() {
           <p>© {new Date().getFullYear()} TradeFunds. Demo platform — trades are simulated.</p>
           <p>Trade responsibly. Past performance is not indicative of future results.</p>
         </div>
+        <p className="mt-4 text-center text-xs text-muted-foreground/70">
+          TradeFunds is a simulated trading platform for educational purposes only.
+        </p>
       </div>
     </footer>
   );
