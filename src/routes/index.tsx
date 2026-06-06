@@ -90,6 +90,36 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* Challenge Tiers */}
+      <section className="container mx-auto px-6 py-16">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">Challenge Tiers</h2>
+          <p className="mt-3 text-muted-foreground">Pick the account size that matches your skill level.</p>
+        </div>
+        <div className="mt-8 grid gap-5 md:grid-cols-3">
+          {[
+            { name: "Starter", size: 5000, price: 49, target: "8%", daily: "5%", split: "70%" },
+            { name: "Pro", size: 10000, price: 99, target: "8%", daily: "5%", split: "75%" },
+            { name: "Elite", size: 25000, price: 199, target: "10%", daily: "5%", split: "80%" },
+          ].map((c) => (
+            <Card key={c.name} className="group relative overflow-hidden border-border/60 bg-card p-6 transition-all hover:border-primary/60 hover:shadow-glow">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">{c.name}</p>
+              <p className="mt-1 text-4xl font-bold">${c.size.toLocaleString()}</p>
+              <p className="mt-3 text-sm text-muted-foreground">Demo account for practice trading.</p>
+              <div className="mt-5 space-y-2 text-sm">
+                <Row label="Profit target" value={c.target} />
+                <Row label="Max daily loss" value={c.daily} />
+                <Row label="Profit split" value={c.split} />
+              </div>
+              <div className="mt-6 flex items-center justify-between">
+                <p className="text-2xl font-semibold">${c.price}</p>
+                <Button size="sm" asChild className="bg-gradient-primary"><Link to="/auth">Start</Link></Button>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
       {/* Challenges preview */}
       <section className="container mx-auto px-6 py-16">
         <div className="flex items-end justify-between">
