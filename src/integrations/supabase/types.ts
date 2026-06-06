@@ -14,7 +14,166 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      challenges: {
+        Row: {
+          account_size: number
+          created_at: string
+          description: string | null
+          id: string
+          max_daily_loss_pct: number
+          max_total_loss_pct: number
+          name: string
+          price: number
+          profit_split_pct: number
+          profit_target_pct: number
+        }
+        Insert: {
+          account_size: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          max_daily_loss_pct: number
+          max_total_loss_pct: number
+          name: string
+          price: number
+          profit_split_pct?: number
+          profit_target_pct: number
+        }
+        Update: {
+          account_size?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          max_daily_loss_pct?: number
+          max_total_loss_pct?: number
+          name?: string
+          price?: number
+          profit_split_pct?: number
+          profit_target_pct?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      trades: {
+        Row: {
+          closed_at: string | null
+          entry_price: number
+          exit_price: number | null
+          id: string
+          opened_at: string
+          pnl: number | null
+          side: string
+          size: number
+          status: string
+          symbol: string
+          user_challenge_id: string
+          user_id: string
+        }
+        Insert: {
+          closed_at?: string | null
+          entry_price: number
+          exit_price?: number | null
+          id?: string
+          opened_at?: string
+          pnl?: number | null
+          side: string
+          size: number
+          status?: string
+          symbol: string
+          user_challenge_id: string
+          user_id: string
+        }
+        Update: {
+          closed_at?: string | null
+          entry_price?: number
+          exit_price?: number | null
+          id?: string
+          opened_at?: string
+          pnl?: number | null
+          side?: string
+          size?: number
+          status?: string
+          symbol?: string
+          user_challenge_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trades_user_challenge_id_fkey"
+            columns: ["user_challenge_id"]
+            isOneToOne: false
+            referencedRelation: "user_challenges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_challenges: {
+        Row: {
+          challenge_id: string
+          created_at: string
+          current_balance: number
+          ended_at: string | null
+          id: string
+          started_at: string
+          starting_balance: number
+          status: string
+          user_id: string
+        }
+        Insert: {
+          challenge_id: string
+          created_at?: string
+          current_balance: number
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          starting_balance: number
+          status?: string
+          user_id: string
+        }
+        Update: {
+          challenge_id?: string
+          created_at?: string
+          current_balance?: number
+          ended_at?: string | null
+          id?: string
+          started_at?: string
+          starting_balance?: number
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_challenges_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "challenges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
