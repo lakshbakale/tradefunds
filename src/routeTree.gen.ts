@@ -11,7 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ChallengesRouteImport } from './routes/challenges'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedTradeRouteImport } from './routes/_authenticated/trade'
+import { Route as AuthenticatedMyChallengesRouteImport } from './routes/_authenticated/my-challenges'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 
 const ChallengesRoute = ChallengesRouteImport.update({
   id: '/challenges',
@@ -23,38 +27,83 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedTradeRoute = AuthenticatedTradeRouteImport.update({
+  id: '/trade',
+  path: '/trade',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyChallengesRoute =
+  AuthenticatedMyChallengesRouteImport.update({
+    id: '/my-challenges',
+    path: '/my-challenges',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/challenges': typeof ChallengesRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/my-challenges': typeof AuthenticatedMyChallengesRoute
+  '/trade': typeof AuthenticatedTradeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/challenges': typeof ChallengesRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/my-challenges': typeof AuthenticatedMyChallengesRoute
+  '/trade': typeof AuthenticatedTradeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/challenges': typeof ChallengesRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/my-challenges': typeof AuthenticatedMyChallengesRoute
+  '/_authenticated/trade': typeof AuthenticatedTradeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/challenges'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/challenges'
+    | '/dashboard'
+    | '/my-challenges'
+    | '/trade'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/challenges'
-  id: '__root__' | '/' | '/auth' | '/challenges'
+  to: '/' | '/auth' | '/challenges' | '/dashboard' | '/my-challenges' | '/trade'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/challenges'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/my-challenges'
+    | '/_authenticated/trade'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ChallengesRoute: typeof ChallengesRoute
 }
@@ -75,6 +124,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -82,11 +138,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/trade': {
+      id: '/_authenticated/trade'
+      path: '/trade'
+      fullPath: '/trade'
+      preLoaderRoute: typeof AuthenticatedTradeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-challenges': {
+      id: '/_authenticated/my-challenges'
+      path: '/my-challenges'
+      fullPath: '/my-challenges'
+      preLoaderRoute: typeof AuthenticatedMyChallengesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedMyChallengesRoute: typeof AuthenticatedMyChallengesRoute
+  AuthenticatedTradeRoute: typeof AuthenticatedTradeRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedMyChallengesRoute: AuthenticatedMyChallengesRoute,
+  AuthenticatedTradeRoute: AuthenticatedTradeRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ChallengesRoute: ChallengesRoute,
 }
